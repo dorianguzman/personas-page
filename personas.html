@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personas - The AI Agent Platform</title>
+    <meta name="description" content="Empowering operators and sports celebrities to deploy autonomous performance marketing agents that optimize fan engagement, user acquisition, and revenue generation.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: 'Youth';
+            src: url("assets/Youth-Light.woff2") format('woff2'),
+                 url("assets/Youth-Light.otf") format("opentype");
+        }
+
+        @font-face {
+            font-family: 'Youth';
+            src: url("assets/Youth-Medium.woff2") format('woff2'),
+                 url("assets/Youth-Medium.otf") format("opentype");
+            font-weight: bold;
+            }
+
+
+        :root {
+            --primary-green: #c4fb01;
+            --primary-cyan: #00bcd4;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --bg-primary: #0a0a0a;
+            --bg-card: rgba(255, 255, 255, 0.02);
+            --bg-card-hover: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(196, 251, 1, 0.3);
+            --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --shadow-elevated: 0 20px 60px rgba(196, 251, 1, 0.1);
+            --gradient-primary: linear-gradient(135deg, rgba(196, 251, 1, 0.15) 0%, rgba(0, 188, 212, 0.1) 100%);
+            --gradient-text: linear-gradient(135deg, #c4fb01 0%, #00bcd4 100%);
+            --blur-strength: 20px;
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 0;
+        }
+
+        body {
+            font-family: 'Geologica', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            position: relative;
+            overflow-x: hidden;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .youth, .section-title, h3, .cta-button {
+            font-family: 'Youth', sans-serif;
+            text-transform: uppercase;
+        }
+        .youth-lower {
+            font-family: 'Youth', sans-serif;
+        }
+
+        /* Enhanced background with parallax effect */
+        .background-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .background-layer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%23c4fb01' fill-opacity='0.02' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: backgroundFloat 20s ease-in-out infinite;
+        }
+
+        .background-layer::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 20%, rgba(196, 251, 1, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(0, 188, 212, 0.02) 0%, transparent 50%);
+            animation: floatingOrbs 30s ease-in-out infinite;
+        }
+
+        @keyframes backgroundFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(0.5deg); }
+        }
+
+        @keyframes floatingOrbs {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(-20px, -20px) scale(1.1); }
+            50% { transform: translate(20px, -10px) scale(0.9); }
+            75% { transform: translate(-10px, 20px) scale(1.05); }
+        }
+
+        /* Container with improved spacing */
+        .container {
+            max-width: min(1400px, 95vw);
+            margin: 0 auto;
+            padding: 0 clamp(16px, 4vw, 40px);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Mobile-specific full-screen sections */
+        @media (max-width: 768px) {
+            html {
+                scroll-snap-type: y mandatory;
+            }
+            
+            .screen-section {
+                min-height: 100vh;
+                min-height: 100dvh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+                padding: 20px 0;
+            }
+        }
+
+        /* Desktop/tablet section styling */
+        @media (min-width: 769px) {
+            .screen-section {
+                padding: clamp(60px, 12vh, 120px) 0;
+                position: relative;
+            }
+            .scroll-indicator {
+                display: none;
+            }
+        }
+
+        /* Enhanced Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 100vh;
+                min-height: 100dvh;
+                padding: 40px 0;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .hero {
+                padding: clamp(60px, 10vh, 120px) 0;
+            }
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(800px, 90vw);
+            height: 400px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.4;
+            z-index: -1;
+            animation: heroGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            0% { transform: translateX(-50%) scale(1) rotate(0deg); opacity: 0.3; }
+            100% { transform: translateX(-50%) scale(1.1) rotate(1deg); opacity: 0.5; }
+        }
+
+        .logo {
+            font-size: clamp(4rem, 12vw, 8rem);
+            font-weight: 900;
+            margin-bottom: clamp(16px, 3vh, 24px);
+            letter-spacing: -0.05em;
+            /* background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text; */
+            animation: logoGlow 3s ease-in-out infinite alternate;
+            text-shadow: 0 0 40px rgba(196, 251, 1, 0.2);
+            line-height: 0.9;
+        }
+
+        @keyframes logoGlow {
+            0% { filter: drop-shadow(0 0 20px rgba(196, 251, 1, 0.2)); }
+            100% { filter: drop-shadow(0 0 40px rgba(196, 251, 1, 0.4)); }
+        }
+
+        .tagline {
+            font-size: clamp(0.7rem, 2vw, 0.85rem);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: clamp(8px, 1vh, 12px);
+            color: var(--text-secondary);
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .subtitle {
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            color: var(--primary-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: clamp(32px, 6vh, 48px);
+            font-weight: 600;
+        }
+
+        .hero-headline {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 700;
+            margin-bottom: clamp(20px, 4vh, 32px);
+            line-height: 1.1;
+            max-width: 900px;
+            letter-spacing: -0.02em;
+        }
+
+        .highlight {
+            color: var(--primary-green);
+            font-weight: 900;
+            position: relative;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-green), transparent);
+            opacity: 0.6;
+        }
+
+        .hero-description {
+            font-size: clamp(1rem, 3vw, 1.25rem);
+            color: var(--text-secondary);
+            margin-bottom: clamp(32px, 6vh, 48px);
+            line-height: 1.6;
+            max-width: 650px;
+            font-weight: 300;
+        }
+
+        /* Enhanced CTA Button */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: clamp(14px, 3vw, 20px) clamp(28px, 6vw, 40px);
+            background: var(--gradient-text);
+            color: var(--bg-primary);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: var(--transition-bounce);
+            box-shadow: var(--shadow-elevated);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(196, 251, 1, 0.3);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: clamp(32px, 6vh, 60px);
+            color: var(--primary-green);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            line-height: 1.1;
+        }
+
+        .section-subtitle {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: clamp(40px, 4vh, 80px);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+            line-height: 1.5;
+        }
+        .personas-text {
+          font-size: clamp(1.3rem, 5vw, 2.3rem);
+          color:#ffffff;
+          font-weight: 800;
+        }
+
+        /* Enhanced Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
+            gap: clamp(20px, 4vw, 32px);
+            margin-bottom: clamp(40px, 8vh, 80px);
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: clamp(24px, 5vw, 40px);
+            backdrop-filter: blur(var(--blur-strength));
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-text);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-elevated);
+            border-color: var(--border-hover);
+            background: var(--bg-card-hover);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover::after {
+            opacity: 1;
+        }
+
+        .feature-card h3 {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-weight: 700;
+            margin-bottom: clamp(16px, 3vh, 24px);
+            color: var(--primary-green);
+            line-height: 1.2;
+        }
+
+        .img-container {
+          max-width: 100%;
+          display: block;
+          padding: 1.5rem 0px;
+        }
+        .media {
+          width: 100%;
+          border-radius: 20px;
+          border: 1px solid var(--border-hover);
+        }
+        /* Enhanced Feature Lists */
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            margin-bottom: clamp(12px, 2vh, 16px);
+            padding-left: 28px;
+            position: relative;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            transition: color 0.3s ease;
+        }
+
+        .feature-list li::before {
+            content: '▶';
+            color: var(--primary-green);
+            font-size: 0.8rem;
+            position: absolute;
+            left: 0;
+            top: 4px;
+            transition: var(--transition-smooth);
+        }
+
+        .feature-list li:hover {
+            color: var(--text-primary);
+        }
+
+        .feature-list li:hover::before {
+            transform: translateX(4px);
+            color: var(--primary-cyan);
+        }
+
+        .feature-highlight {
+            font-weight: 900;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Enhanced Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+            gap: clamp(16px, 4vw, 32px);
+            margin: clamp(40px, 4vh, 80px) 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: clamp(32px, 6vw, 48px) clamp(20px, 4vw, 32px);
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(var(--blur-strength));
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-elevated);
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-number {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 900;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: clamp(8px, 2vh, 12px);
+            line-height: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-label {
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+            line-height: 1.3;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Enhanced Roadmap */
+        .roadmap-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .roadmap-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: clamp(20px, 4vw, 32px);
+            margin-bottom: clamp(16px, 3vh, 24px);
+            backdrop-filter: blur(var(--blur-strength));
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--gradient-text);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .roadmap-item:hover {
+            border-color: var(--primary-cyan);
+            transform: translateX(8px);
+            background: var(--bg-card-hover);
+        }
+
+        .roadmap-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .roadmap-item h4 {
+            color: var(--primary-cyan);
+            font-weight: 700;
+            margin-bottom: clamp(8px, 1vh, 12px);
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+        }
+
+        .roadmap-item p {
+            color: var(--text-secondary);
+            line-height: 1.5;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        /* Enhanced Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            border-top: 1px solid var(--border-color);
+            padding: clamp(40px, 8vh, 80px) 0 clamp(32px, 6vh, 48px) 0;
+            text-align: center;
+            backdrop-filter: blur(var(--blur-strength));
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            opacity: 0.1;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-brand {
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            font-weight: 700;
+            margin-bottom: clamp(12px, 2vh, 16px);
+        }
+
+        .footer-tagline {
+            color: var(--text-secondary);
+            margin-bottom: clamp(24px, 4vh, 40px);
+            font-weight: 300;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .footer-logo {
+            max-width: min(200px, 60vw);
+            height: auto;
+            opacity: 0.8;
+            transition: var(--transition-smooth);
+        }
+
+        .footer-logo:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* Mobile scroll indicator */
+        @media (max-width: 768px) {
+            .scroll-indicator {
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                color: var(--text-secondary);
+                font-size: 0.8rem;
+                text-align: center;
+                animation: bounce 2s infinite;
+                z-index: 10;
+            }
+
+            @keyframes bounce {
+                0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+                40% { transform: translateX(-50%) translateY(-10px); }
+                60% { transform: translateX(-50%) translateY(-5px); }
+            }
+        }
+
+        /* Scroll reveal animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in:nth-child(1) { transition-delay: 0.1s; }
+        .fade-in:nth-child(2) { transition-delay: 0.2s; }
+        .fade-in:nth-child(3) { transition-delay: 0.3s; }
+        .fade-in:nth-child(4) { transition-delay: 0.4s; }
+
+        /* Performance optimizations */
+        .feature-card,
+        .stat-card,
+        .roadmap-item {
+            will-change: transform;
+        }
+
+        /* Reduced motion accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --text-secondary: #cccccc;
+                --border-color: rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        /* Landscape phone optimizations */
+        @media (max-height: 500px) and (orientation: landscape) and (max-width: 768px) {
+            .screen-section {
+                min-height: auto;
+                padding: 20px 0;
+            }
+            
+            .logo {
+                font-size: clamp(2rem, 8vw, 3rem);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-layer"></div>
+    
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="screen-section hero">
+            <div class="tagline">performance marketing platform</div>
+            <h1 class="logo youth">personas</h1>
+            <div class="subtitle">Transforming iGaming Through Intelligent AI Agents</div>
+            
+            <h2 class="hero-headline">
+                iGaming is<br>inherently social.<br>
+                <span class="highlight">personas makes<br>it smarter.</span>
+            </h2>
+            
+            <p class="hero-description">
+                AI agents that drive user engagement, increase betting activity, and build unbreakable brand loyalty for iGaming operators.
+            </p>
+            
+            <a href="https://calendly.com/yang-qstar" class="cta-button">
+                <span>Schedule a demo</span>
+                <span style="font-size: 1.2em;">→</span>
+            </a>
+            
+            <div class="scroll-indicator">
+                <div>Swipe up to explore</div>
+                <div style="font-size: 1.2em; margin-top: 4px;">↑</div>
+            </div>
+        </section>
+        <!-- Features Section -->
+        <section id="personas" class="screen-section">
+          <h2 class="section-title youth">personas</h2>
+            <p class="section-subtitle personas-text">
+              QStarLabs' <span class="feature-highlight">personas</span> platform empowers operators and sports celebrities to deploy autonomous
+              performance marketing agents that optimize fan engagement, user acquisition, and revenue generation.
+            </p>
+          </section>
+        <!-- Features Section -->
+        <section id="features" class="screen-section">
+            <h2 class="section-title">Platform Features</h2>
+            <p class="section-subtitle">
+              Intelligent AI agents that drive user acquisition, engagement, and retention through personalized marketing automation.
+            </p>
+            
+            <div class="card-grid">
+                <div class="feature-card fade-in">
+                    <h3>Simplified Management</h3>
+                    <div class="img-container">
+                        <img class="media fade-in" src="assets/qstarlabs-platform-interface.jpg" />
+                    </div>
+                    <ul class="feature-list">
+                        <li><span class="feature-highlight">White-glove service</span> and high-touch support</li>
+                        <li><span class="feature-highlight">Enterprise-grade platform</span> with customizable features</li>
+                        <li>Brand-specific micro-influencers that create <span class="feature-highlight">authentic connections</span></li>
+                        <li><span class="feature-highlight">Automated content creation</span> that generates <span class="feature-highlight">on-brand</span> images and copy</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <h3>Tailored Solutions</h3>
+                    <div class="img-container">
+                        <img class="media fade-in" src="assets/personas-600x600.jpg" />
+                    </div>
+                    <ul class="feature-list">
+                        <li>Customized <span class="feature-highlight">branding</span> and house odds integration</li>
+                        <li>Curated <span class="feature-highlight">fan engagement</span> strategies</li>
+                        <li><span class="feature-highlight">Reinforcement learning</span> process to self-learn content and engagement</li>
+                        <li>Proprietary <span class="feature-highlight">app integration</span></li>
+                        <li>Multi-modal <span class="feature-highlight">media creation</span></li>
+                        <li><span class="feature-highlight">Reply approval</span> capability and integrated spam filters</li>
+                        <li>Advanced <span class="feature-highlight">data analytics</span> for continuous improvement</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="screen-section">
+            <h2 class="section-title">Proven Results</h2>
+            <p class="section-subtitle">
+                Our first social agent deployment with an online gaming operator drove measurable business impact
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-card fade-in">
+                    <div class="stat-number">15%</div>
+                    <div class="stat-label">YoY Increase in College Basketball Bets</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">143K</div>
+                    <div class="stat-label">Impressions in First 15 Days</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">2.6K+</div>
+                    <div class="stat-label">Engagements Generated</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">58%</div>
+                    <div class="stat-label">Win Accuracy Rate</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Section -->
+        <section class="screen-section">
+            <h2 class="section-title">The Future of iGaming</h2>
+            <p class="section-subtitle">
+                Our roadmap includes cutting-edge innovations to keep you ahead of the competition
+            </p>
+            
+            <div class="roadmap-container">
+                <div class="roadmap-item fade-in">
+                    <h4>NLP-Driven Integration</h4>
+                    <p>Advanced <span class="feature-highlight">natural language processing</span> across all platforms for seamless user experiences</p>
+                </div>
+                
+                <div class="roadmap-item fade-in">
+                    <h4>Multi-Platform Expansion</h4>
+                    <p>Expansion to Instagram, Telegram, and <span class="feature-highlight">proprietary apps</span> for maximum reach</p>
+                </div>
+                
+                <div class="roadmap-item fade-in">
+                    <h4>Advanced AI Tools</h4>
+                    <p>Next-generation AI tools for deeper <span class="feature-highlight">fan engagement</span> and personalization</p>
+                </div>
+                
+                <div class="roadmap-item fade-in">
+                    <h4>CRM Integration</h4>
+                    <p><span class="feature-highlight">Self-learning</span> personalized player profiles via intelligent CRM integration</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="screen-section">
+            <div style="text-align: center;">
+                <h2 class="section-title">Ready to Transform Your Strategy?</h2>
+                <p class="section-subtitle">
+                    Partner with personas to revolutionize your iGaming marketing approach and drive unprecedented engagement.
+                </p>
+                <a href="https://calendly.com/yang-qstar" class="cta-button">
+                  <span>Schedule a demo</span>
+                  <span style="font-size: 1.2em;">→</span>
+              </a>
+            </div>
+        </section>
+
+    <!-- Footer -->
+    <section class=" screen-section">
+        <div class="">
+            <div class="">
+                <p class="footer-brand"><span class="youth">personas</span> <span class="youth-lower">by QStarLabs</span></p>
+                <p class="footer-tagline"><strong>Building engagement, driving revenue, and delivering insights</strong></p>
+                <p class="footer-tagline">QStarLabs is an AI application company specializing in agents for the sports betting, iGaming, and web3 verticals. Founded to bridge the gap between AI research and enterprise applications, QStarLabs partners with gaming operators to drive technical excellence and business results. The company combines proprietary data infrastructure, reinforcement learning algorithms, and applied AI with leading generative AI models to deliver enterprise-grade solutions for operators.</p>
+                <div style="margin-top: 32px;">
+                    <svg class="footer-logo" xmlns="http://www.w3.org/2000/svg" width="236" height="44" viewBox="0 0 236 44" fill="none">
+                        <path d="M161.583 34.9776C158.255 34.9776 157.141 33.7515 157.141 30.4192V9.01063H161.85V30.7022H170.139V34.9619H161.583V34.9776Z" fill="white"/>
+                        <path d="M188.617 23.9904C188.617 19.9507 185.697 16.9799 181.804 16.9799C177.91 16.9799 175.022 19.9507 175.022 23.9904C175.022 28.03 177.942 31.0322 181.804 31.0322C185.697 31.048 188.617 28.0772 188.617 23.9904ZM188.507 13.176H192.95V34.9776H188.507V32.164C186.984 34.1602 184.441 35.4334 181.364 35.4334C175.147 35.4334 170.296 30.655 170.296 24.0847C170.296 17.5143 175.147 12.7359 181.364 12.7359C184.284 12.7359 186.843 13.8834 188.507 15.9582V13.176Z" fill="white"/>
+                        <path d="M214.159 23.9904C214.159 19.9507 211.239 16.9799 207.377 16.9799C203.515 16.9799 200.564 19.9507 200.564 23.9904C200.564 28.03 203.484 31.0322 207.377 31.0322C211.239 31.048 214.159 28.0772 214.159 23.9904ZM218.9 24.0689C218.9 30.6393 214.081 35.4177 207.864 35.4177C204.756 35.4177 202.197 34.1602 200.674 32.1168V34.9776H196.262V9.01063H200.894V15.7224C202.479 13.8676 204.96 12.7202 207.848 12.7202C214.097 12.7202 218.9 17.5458 218.9 24.0689Z" fill="white"/>
+                        <path d="M220.376 28.4387H224.929C225.117 30.4349 226.483 31.6295 228.257 31.6295C230.031 31.6295 231.224 30.5607 231.224 29.1146C231.224 27.2284 229.811 26.7097 226.483 25.8137C223.155 24.8863 220.596 22.9215 220.596 19.1333C220.596 15.3452 223.563 12.7202 227.959 12.7202C232.354 12.7202 235.149 15.2352 235.479 19.3534H230.926C230.816 17.5301 229.56 16.4612 227.959 16.4612C226.248 16.4612 225.149 17.5301 225.149 18.8347C225.149 20.5009 226.216 21.0667 229.623 22.0255C233.029 22.9844 235.73 25.0592 235.73 28.7373C235.73 32.8556 232.731 35.4177 228.21 35.4177C223.689 35.4177 220.643 32.8241 220.376 28.4387Z" fill="white"/>
+                        <path d="M70.6077 30.8908C65.7096 30.8908 61.7221 26.8983 61.7221 21.9941C61.7221 17.0899 65.7096 13.0974 70.6077 13.0974C75.5058 13.0974 79.4934 17.0899 79.4934 21.9941C79.4934 23.9118 78.8811 25.688 77.845 27.1498L75.8826 25.185H70.1367L74.7837 29.8376C73.5434 30.4978 72.1148 30.8908 70.6077 30.8908ZM85.6787 34.9776L81.0789 30.3721C82.9157 28.0772 84.0147 25.1535 84.0147 21.9941C84.0147 14.575 78.0176 8.57051 70.6077 8.57051C63.1978 8.57051 57.2008 14.575 57.2008 21.9941C57.2008 29.4132 63.1978 35.4177 70.6077 35.4177C73.3707 35.4177 75.9454 34.5846 78.0804 33.1385L79.9172 34.9776H85.6787Z" fill="white"/>
+                        <path d="M114.879 30.8908C112.728 30.8908 111.802 30.6393 111.802 28.4858L111.833 18.9133H114.973V14.8422H111.833V9.08922H107.249V28.5487C107.249 33.6729 110.106 34.9619 114.172 34.9619H115.177V30.8908H114.879Z" fill="white"/>
+                        <path d="M134.864 23.9904C134.864 19.9507 131.944 16.9799 128.05 16.9799C124.157 16.9799 121.268 19.9507 121.268 23.9904C121.268 28.03 124.188 31.0322 128.05 31.0322C131.928 31.048 134.864 28.0772 134.864 23.9904ZM134.754 13.176H139.197V34.9776H134.754V32.164C133.231 34.1602 130.688 35.4334 127.611 35.4334C121.394 35.4334 116.543 30.655 116.543 24.0847C116.543 17.5143 121.394 12.7359 127.611 12.7359C130.531 12.7359 133.09 13.8834 134.754 15.9582V13.176Z" fill="white"/>
+                        <path d="M153.812 12.9403V17.4986H153.546C150.327 17.4986 147.109 18.6775 147.109 24.9177V34.9619H142.525V13.176H146.889V16.3983C148.192 14.1663 150.547 12.956 153.624 12.956H153.812V12.9403Z" fill="white"/>
+                        <path d="M87.1545 27.1183H91.8956C92.1624 29.9005 93.8579 31.378 96.15 31.378C98.442 31.378 99.745 29.9634 99.745 28.0772C99.745 25.5936 98.1124 24.7448 94.376 23.6603C90.5611 22.5914 87.5312 20.5009 87.5312 16.0525C87.5312 11.6042 90.8594 8.57051 95.7889 8.57051C100.718 8.57051 103.78 11.4313 104.188 16.3197H99.4782C99.2898 13.9148 97.7356 12.6102 95.7732 12.6102C93.8108 12.6102 92.288 13.9148 92.288 15.7224C92.288 17.9545 93.7637 18.6932 97.3588 19.7935C101.205 20.941 104.549 23.4245 104.549 27.6528C104.549 32.5098 101.142 35.402 96.1029 35.402C90.8908 35.4177 87.5155 32.3369 87.1545 27.1183Z" fill="white"/>
+                        <path d="M22.2548 2.73895L24.1701 14.2135L36.6194 5.37966C28.3617 -1.80369 16.0537 -1.78797 7.79605 5.39538L20.1041 14.1034L22.2548 2.73895Z" fill="white"/>
+                        <path d="M41.4704 21.9312L30.0572 24.0218L38.8487 36.408C45.9917 28.1715 46.0231 15.8953 38.9115 7.64312L30.2927 20.0765L41.4704 21.9312Z" fill="white"/>
+                        <path d="M3.00786 21.9941L14.0913 20.1236L5.53539 7.69028C-1.51345 15.9425 -1.48206 28.1558 5.61389 36.3765L14.3111 24.0689L3.00786 21.9941Z" fill="white"/>
+                        <path d="M44.2177 44L24.123 30.1677L22.2391 41.0449L22.2077 41.2021L20.2297 30.2306L7.90594 38.6871C12.0191 42.2238 17.137 44 22.2391 44H44.2177Z" fill="white"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+  </div>
+
+    <script>
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for CTA buttons
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

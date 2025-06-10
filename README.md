@@ -13,6 +13,7 @@ This landing page showcases the Personas platform, which empowers operators and 
 - **Performance Optimized**: Lightweight implementation with minimal dependencies
 - **Accessibility**: Built with accessibility best practices in mind
 
+
 ## Structure
 
 ```

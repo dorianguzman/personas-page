@@ -2,6 +2,10 @@
 
 A modern, responsive landing page for Personas by QStarLabs - an AI agent platform for iGaming operators.
 
+## ⚡ Live Demo
+
+**🌐 View the landing page:** [**Personas Platform**](https://dorianguzman.github.io/personas-page/personas.html)
+
 ## Overview
 
 This landing page showcases the Personas platform, which empowers operators and sports celebrities to deploy autonomous performance marketing agents that optimize fan engagement, user acquisition, and revenue generation.

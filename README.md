@@ -12,10 +12,12 @@ This landing page showcases the Personas platform, which empowers operators and 
 
 ## Features
 
+- **Multilingual Support**: Full English and Spanish (Mexican market) language support with easy switching
 - **Responsive Design**: Fully responsive layout that works seamlessly across desktop, tablet, and mobile devices
 - **Modern UI**: Clean, modern interface with smooth animations and transitions
 - **Performance Optimized**: Lightweight implementation with minimal dependencies
 - **Accessibility**: Built with accessibility best practices in mind
+- **Language Persistence**: Remembers user's language preference using localStorage
 
 
 ## Structure
@@ -29,9 +31,9 @@ personas-page/
 │   ├── Youth-Medium.woff2      # Web-optimized font (bold)
 │   ├── personas-600x600.jpg    # Product showcase image
 │   └── qstarlabs-platform-interface.jpg  # Platform interface screenshot
-├── personas.html               # Main landing page
-├── push-to-github.sh          # Deployment helper script
-└── README.md                  # This file
+├── personas.html               # Main landing page (multilingual - EN/ES)
+├── .gitignore                  # Git ignore file
+└── README.md                   # This file
 ```
 
 ## Key Sections

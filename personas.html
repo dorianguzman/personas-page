@@ -15,6 +15,46 @@
             box-sizing: border-box;
         }
 
+        /* Language Switcher Styles */
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 8px;
+            border-radius: 25px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 20px;
+            font-family: 'Geologica', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .lang-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+
+        .lang-btn.active {
+            background: var(--gradient-text);
+            color: var(--bg-primary);
+            border-color: transparent;
+        }
+
         @font-face {
             font-family: 'Youth';
             src: url("assets/Youth-Light.woff2") format('woff2'),
@@ -721,6 +761,12 @@
 <body>
     <div class="background-layer"></div>
     
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="es">ES</button>
+    </div>
+    
     <div class="container">
         <!-- Hero Section -->
         <section class="screen-section hero">
@@ -895,6 +941,275 @@
   </div>
 
     <script>
+        // Translation data
+        const translations = {
+            en: {
+                // Meta
+                pageTitle: "Personas - The AI Agent Platform",
+                pageDescription: "Empowering operators and sports celebrities to deploy autonomous performance marketing agents that optimize fan engagement, user acquisition, and revenue generation.",
+                
+                // Hero Section
+                tagline: "performance marketing platform",
+                subtitle: "Operator-branded AI micro-influencers",
+                heroHeadline1: "iGaming is",
+                heroHeadline2: "inherently social.",
+                heroHeadline3: "personas makes",
+                heroHeadline4: "it smarter.",
+                heroDescription: "Self-learning agents that deliver targeted fan engagement at massive scale. Low investment, powerful results.",
+                ctaButton: "Schedule a demo",
+                scrollIndicator: "Swipe up to explore",
+                
+                // Personas Section
+                personasText: "QStarLabs seamlessly integrates <span class=\"youth\" style=\"color: var(--primary-green); font-weight: bold;\">PERSONAS</span> into your tech stack, delivering intelligent, scalable, and affordable AI micro-influencers that transform low marketing investment into massive targeted fan engagement.",
+                
+                // Features Section
+                featuresTitle: "Intelligent, Scalable, Affordable",
+                featuresSubtitle: "Intelligent agents that seamlessly integrate into your existing tech stack to deliver targeted engagement at scale.",
+                feature1Title: "Self-Learning & Targeted",
+                feature1Item1: "<span class=\"feature-highlight\">White-glove service</span> and high-touch support",
+                feature1Item2: "<span class=\"feature-highlight\">Enterprise-grade platform</span> with customizable features",
+                feature1Item3: "Brand-specific micro-influencers that create <span class=\"feature-highlight\">authentic connections</span>",
+                feature1Item4: "<span class=\"feature-highlight\">Automated content creation</span> that generates <span class=\"feature-highlight\">on-brand</span> images and copy",
+                feature2Title: "Scalable & Affordable",
+                feature2Item1: "Customized <span class=\"feature-highlight\">branding</span> and house odds integration",
+                feature2Item2: "Curated <span class=\"feature-highlight\">fan engagement</span> strategies",
+                feature2Item3: "<span class=\"feature-highlight\">Reinforcement learning</span> process to self-learn content and engagement",
+                feature2Item4: "Proprietary <span class=\"feature-highlight\">app integration</span>",
+                feature2Item5: "Multi-modal <span class=\"feature-highlight\">media creation</span>",
+                feature2Item6: "<span class=\"feature-highlight\">Reply approval</span> capability and integrated spam filters",
+                feature2Item7: "Advanced <span class=\"feature-highlight\">data analytics</span> for continuous improvement",
+                
+                // Stats Section
+                statsTitle: "Low Investment, Massive Scale",
+                statsSubtitle: "Transform minimal marketing spend into measurable business impact with our proven AI agents",
+                stat1Number: "15%",
+                stat1Label: "YoY Increase in College Basketball Bets",
+                stat2Number: "143K",
+                stat2Label: "Impressions in First 15 Days",
+                stat3Number: "2.6K+",
+                stat3Label: "Engagements Generated",
+                stat4Number: "58%",
+                stat4Label: "Win Accuracy Rate",
+                
+                // Future Section
+                futureTitle: "The Future of iGaming",
+                futureSubtitle: "Our roadmap includes cutting-edge innovations to keep you ahead of the competition",
+                roadmap1Title: "NLP-Driven Integration",
+                roadmap1Text: "Advanced <span class=\"feature-highlight\">natural language processing</span> across all platforms for seamless user experiences",
+                roadmap2Title: "Multi-Platform Expansion",
+                roadmap2Text: "Expansion to Instagram, Telegram, and <span class=\"feature-highlight\">proprietary apps</span> for maximum reach",
+                roadmap3Title: "Advanced AI Tools",
+                roadmap3Text: "Next-generation AI tools for deeper <span class=\"feature-highlight\">fan engagement</span> and personalization",
+                roadmap4Title: "CRM Integration",
+                roadmap4Text: "<span class=\"feature-highlight\">Self-learning</span> personalized player profiles via intelligent CRM integration",
+                
+                // CTA Section
+                ctaTitle: "Ready to Transform Your Strategy?",
+                ctaSubtitle: "Partner with <span class=\"youth\" style=\"color: var(--primary-green); font-weight: bold;\">PERSONAS</span> to revolutionize your iGaming marketing approach and drive unprecedented engagement.",
+                
+                // Footer
+                footerBrand: "<span class=\"youth\">personas</span> <span class=\"youth-lower\">by QStarLabs</span>",
+                footerTagline1: "<strong>Building engagement, driving revenue, and delivering insights</strong>",
+                footerTagline2: "QStarLabs is an AI application company specializing in agents for the sports betting, iGaming, and web3 verticals. Founded to bridge the gap between AI research and enterprise applications, QStarLabs partners with gaming operators to drive technical excellence and business results. The company combines proprietary data infrastructure, reinforcement learning algorithms, and applied AI with leading generative AI models to deliver enterprise-grade solutions for operators."
+            },
+            es: {
+                // Meta
+                pageTitle: "Personas - La Plataforma de Agentes AI",
+                pageDescription: "Empoderando a operadores y celebridades deportivas para implementar agentes autónomos de performance marketing que optimizan el engagement con fans, la adquisición de usuarios y la generación de revenue.",
+                
+                // Hero Section
+                tagline: "plataforma de performance marketing",
+                subtitle: "Micro-influencers AI con marca del operador",
+                heroHeadline1: "El iGaming es",
+                heroHeadline2: "inherentemente social.",
+                heroHeadline3: "personas lo hace",
+                heroHeadline4: "más inteligente.",
+                heroDescription: "Agentes inteligentes que generan interacción con tu mercado objetivo a gran escala. Inversión mínima, enormes resultados.",
+                ctaButton: "Agenda un demo",
+                scrollIndicator: "Desliza hacia arriba para explorar",
+                
+                // Personas Section
+                personasText: "QStarLabs integra <span class=\"youth\" style=\"color: var(--primary-green); font-weight: bold;\">PERSONAS</span> perfectamente en tu infraestructura actual, entregando micro-influencers AI inteligentes, escalables y accesibles que convierten una inversión mínima de marketing en interacción masiva con tu mercado objetivo.",
+                
+                // Features Section
+                featuresTitle: "Inteligente, Escalable, Accesible",
+                featuresSubtitle: "Agentes inteligentes que se integran sin problemas en tu infraestructura actual para generar interacción segmentada a gran escala.",
+                feature1Title: "Aprendizaje Automático y Targeting",
+                feature1Item1: "<span class=\"feature-highlight\">Servicio premium</span> y soporte personalizado",
+                feature1Item2: "<span class=\"feature-highlight\">Plataforma enterprise</span> con características personalizables",
+                feature1Item3: "Micro-influencers específicos de tu marca que crean <span class=\"feature-highlight\">conexiones auténticas</span>",
+                feature1Item4: "<span class=\"feature-highlight\">Creación automatizada de contenido</span> que genera imágenes y textos <span class=\"feature-highlight\">alineados con tu marca</span>",
+                feature2Title: "Escalable y Accesible",
+                feature2Item1: "<span class=\"feature-highlight\">Branding</span> personalizado e integración con momios de la casa",
+                feature2Item2: "Estrategias diseñadas de <span class=\"feature-highlight\">interacción con fans</span>",
+                feature2Item3: "Proceso de <span class=\"feature-highlight\">reinforcement learning</span> para aprendizaje automático de contenido e interacciones",
+                feature2Item4: "Integración con <span class=\"feature-highlight\">tu aplicación</span>",
+                feature2Item5: "Creación de <span class=\"feature-highlight\">contenido multimedia</span>",
+                feature2Item6: "Sistema de <span class=\"feature-highlight\">aprobación de respuestas</span> y filtros anti-spam integrados",
+                feature2Item7: "<span class=\"feature-highlight\">Análisis de datos</span> avanzado para mejora continua",
+                
+                // Stats Section
+                statsTitle: "Inversión mínima, enormes resultados",
+                statsSubtitle: "Convierte un presupuesto reducido de marketing en resultados de negocio medibles con nuestros agentes AI",
+                stat1Number: "15%",
+                stat1Label: "Incremento Anual en Apuestas de Basketball Universitario",
+                stat2Number: "143K",
+                stat2Label: "Impresiones en los Primeros 15 Días",
+                stat3Number: "2.6K+",
+                stat3Label: "Interacciones Generadas",
+                stat4Number: "58%",
+                stat4Label: "Precisión en Pronósticos Ganadores",
+                
+                // Future Section
+                futureTitle: "El Futuro del iGaming",
+                futureSubtitle: "Nuestro roadmap incluye innovaciones de vanguardia para mantenerte un paso adelante de la competencia",
+                roadmap1Title: "Integración con NLP",
+                roadmap1Text: "<span class=\"feature-highlight\">Procesamiento de lenguaje natural</span> avanzado en todas las plataformas para una experiencia perfecta",
+                roadmap2Title: "Expansión Multi-Plataforma",
+                roadmap2Text: "Expansión a Instagram, Telegram y <span class=\"feature-highlight\">tu aplicación</span> para alcance máximo",
+                roadmap3Title: "Herramientas AI de Nueva Generación",
+                roadmap3Text: "Tecnología AI avanzada para <span class=\"feature-highlight\">mayor interacción con fans</span> y personalización completa",
+                roadmap4Title: "Integración CRM",
+                roadmap4Text: "Perfiles de jugador personalizados que <span class=\"feature-highlight\">aprenden automáticamente</span> mediante integración CRM inteligente",
+                
+                // CTA Section
+                ctaTitle: "¿Listo para Transformar tu Estrategia?",
+                ctaSubtitle: "Únete a <span class=\"youth\" style=\"color: var(--primary-green); font-weight: bold;\">PERSONAS</span> para revolucionar tu estrategia de marketing en iGaming y generar interacciones sin precedentes.",
+                
+                // Footer
+                footerBrand: "<span class=\"youth\">personas</span> <span class=\"youth-lower\">by QStarLabs</span>",
+                footerTagline1: "<strong>Construyendo engagement, generando revenue, entregando insights</strong>",
+                footerTagline2: "QStarLabs es una empresa de aplicaciones AI especializada en agentes para sports betting, iGaming y web3. Fundada para conectar la investigación en AI con aplicaciones empresariales, QStarLabs se asocia con operadores de gaming para lograr resultados de negocio excepcionales. La empresa combina tecnología propietaria, algoritmos de reinforcement learning y los mejores modelos de AI generativa para crear soluciones empresariales que realmente funcionan."
+            }
+        };
+
+        // Initialize language
+        let currentLang = localStorage.getItem('language') || 'en';
+
+        // Function to update content
+        function updateContent(lang) {
+            const t = translations[lang];
+            
+            // Update meta tags
+            document.title = t.pageTitle;
+            document.querySelector('meta[name="description"]').content = t.pageDescription;
+            
+            // Update all translatable elements
+            const elements = {
+                '.tagline': t.tagline,
+                '.subtitle': t.subtitle,
+                '.hero-description': t.heroDescription,
+                '.section-subtitle.personas-text': t.personasText,
+                '.scroll-indicator div:first-child': t.scrollIndicator,
+                '.footer-tagline:first-of-type': t.footerTagline1,
+                '.footer-tagline:last-of-type': t.footerTagline2
+            };
+            
+            // Update simple text elements
+            for (const [selector, text] of Object.entries(elements)) {
+                const el = document.querySelector(selector);
+                if (el) el.innerHTML = text;
+            }
+            
+            // Update hero headline
+            const heroHeadline = document.querySelector('.hero-headline');
+            if (heroHeadline) {
+                heroHeadline.innerHTML = `
+                    ${t.heroHeadline1}<br>${t.heroHeadline2}<br>
+                    <span class="highlight">${t.heroHeadline3}<br>${t.heroHeadline4}</span>
+                `;
+            }
+            
+            // Update CTA buttons
+            document.querySelectorAll('.cta-button span:first-child').forEach(btn => {
+                btn.textContent = t.ctaButton;
+            });
+            
+            // Update section titles
+            const sectionTitles = document.querySelectorAll('.section-title');
+            sectionTitles[0].textContent = 'personas'; // Keep brand name
+            sectionTitles[1].textContent = t.featuresTitle;
+            sectionTitles[2].textContent = t.statsTitle;
+            sectionTitles[3].textContent = t.futureTitle;
+            sectionTitles[4].textContent = t.ctaTitle;
+            
+            // Update section subtitles
+            const sectionSubtitles = document.querySelectorAll('.section-subtitle');
+            sectionSubtitles[1].textContent = t.featuresSubtitle;
+            sectionSubtitles[2].textContent = t.statsSubtitle;
+            sectionSubtitles[3].textContent = t.futureSubtitle;
+            sectionSubtitles[4].innerHTML = t.ctaSubtitle;
+            
+            // Update feature cards
+            const featureCards = document.querySelectorAll('.feature-card');
+            if (featureCards[0]) {
+                featureCards[0].querySelector('h3').textContent = t.feature1Title;
+                const items1 = featureCards[0].querySelectorAll('.feature-list li');
+                items1[0].innerHTML = t.feature1Item1;
+                items1[1].innerHTML = t.feature1Item2;
+                items1[2].innerHTML = t.feature1Item3;
+                items1[3].innerHTML = t.feature1Item4;
+            }
+            
+            if (featureCards[1]) {
+                featureCards[1].querySelector('h3').textContent = t.feature2Title;
+                const items2 = featureCards[1].querySelectorAll('.feature-list li');
+                items2[0].innerHTML = t.feature2Item1;
+                items2[1].innerHTML = t.feature2Item2;
+                items2[2].innerHTML = t.feature2Item3;
+                items2[3].innerHTML = t.feature2Item4;
+                items2[4].innerHTML = t.feature2Item5;
+                items2[5].innerHTML = t.feature2Item6;
+                items2[6].innerHTML = t.feature2Item7;
+            }
+            
+            // Update stats
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards[0].querySelector('.stat-number').textContent = t.stat1Number;
+            statCards[0].querySelector('.stat-label').textContent = t.stat1Label;
+            statCards[1].querySelector('.stat-number').textContent = t.stat2Number;
+            statCards[1].querySelector('.stat-label').textContent = t.stat2Label;
+            statCards[2].querySelector('.stat-number').textContent = t.stat3Number;
+            statCards[2].querySelector('.stat-label').textContent = t.stat3Label;
+            statCards[3].querySelector('.stat-number').textContent = t.stat4Number;
+            statCards[3].querySelector('.stat-label').textContent = t.stat4Label;
+            
+            // Update roadmap
+            const roadmapItems = document.querySelectorAll('.roadmap-item');
+            roadmapItems[0].querySelector('h4').textContent = t.roadmap1Title;
+            roadmapItems[0].querySelector('p').innerHTML = t.roadmap1Text;
+            roadmapItems[1].querySelector('h4').textContent = t.roadmap2Title;
+            roadmapItems[1].querySelector('p').innerHTML = t.roadmap2Text;
+            roadmapItems[2].querySelector('h4').textContent = t.roadmap3Title;
+            roadmapItems[2].querySelector('p').innerHTML = t.roadmap3Text;
+            roadmapItems[3].querySelector('h4').textContent = t.roadmap4Title;
+            roadmapItems[3].querySelector('p').innerHTML = t.roadmap4Text;
+            
+            // Update footer
+            document.querySelector('.footer-brand').innerHTML = t.footerBrand;
+        }
+
+        // Language switcher functionality
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.dataset.lang;
+                currentLang = lang;
+                localStorage.setItem('language', lang);
+                
+                // Update active state
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update content
+                updateContent(lang);
+            });
+        });
+
+        // Initialize with saved language
+        document.querySelector(`.lang-btn[data-lang="${currentLang}"]`).classList.add('active');
+        document.querySelector(`.lang-btn[data-lang="${currentLang === 'en' ? 'es' : 'en'}"]`).classList.remove('active');
+        updateContent(currentLang);
+
         // Scroll reveal animation
         const observerOptions = {
             threshold: 0.1,
